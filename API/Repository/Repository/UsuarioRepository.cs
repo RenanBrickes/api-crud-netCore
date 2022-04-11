@@ -1,10 +1,12 @@
 ﻿using Dominio.Context;
 using Dominio.Entites;
+using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Repository.Repository
 {
@@ -27,6 +29,11 @@ namespace Repository.Repository
         public void Excluir(Usuario usuario)
         {
             Delete(usuario);
+        }
+
+        public async Task<bool> PorEmail(string email)
+        {
+            return await _context.Users.Where(u => u.Email == email).CountAsync() > 0;
         }
 
         public Usuario Selecionar(string id)

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Repository.Interface
 {
@@ -12,7 +13,7 @@ namespace Repository.Interface
         Usuario Selecionar(string id);
         void Excluir(Usuario usuario);
         IEnumerable<Usuario> Todos();
-
+        Task<bool> PorEmail(string email);
     }
     
 }

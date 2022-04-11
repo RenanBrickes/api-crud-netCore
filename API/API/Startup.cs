@@ -15,6 +15,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Repository.Interface;
+using Repository.Repository;
+using Service.Interface;
+using Service.Service;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace API
 {
@@ -32,10 +37,28 @@ namespace API
         {
             services.AddControllers();
 
+            services.AddSwaggerGen(options => {
+                services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                    {
+                        Version = "v1",
+                        Title = "APICrud",
+                        Description = "Swagger APICrud para teste nas rotas",
+                    });
+                });
+
+
+
+            });
+
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<Usuario, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                             .AddEntityFrameworkStores<Context>();
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +67,10 @@ namespace API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseSwagger();
+                app.UseSwaggerUI();
+
             }
 
             app.UseHttpsRedirection();
