@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Repository.Repository
 {
@@ -27,19 +28,19 @@ namespace Repository.Repository
             _context.Remove(entity);
         }
 
-        public T Read(dynamic id)
+        public async Task<T> Read(dynamic id)
         {
-            return _context.Users.Find(id);
+            return await _context.Users.FindAsync(id);
         }
 
-        public bool Save()
+        public async Task<bool> Save()
         {
-            return _context.SaveChanges() > 0; 
+            return await _context.SaveChangesAsync() > 0; 
         }
 
-        public void Update(T entity)
-        {
-            _context.Update(entity);
-        }
+    public void Update(T entity)
+    {
+        _context.Update(entity);
     }
+}
 }

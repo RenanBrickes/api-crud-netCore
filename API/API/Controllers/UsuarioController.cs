@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dominio.Entites;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interface;
@@ -39,6 +40,26 @@ namespace API.Controllers
             }
 
             return Ok(new Resposta(false, ""));
+        }
+
+        [HttpPut("/edit")]
+        public async Task<IActionResult> Edit(UsuarioEditView usuarioEdit)
+        {
+            //Verifica se usuário existe como ID informado
+            Resposta<Usuario> usuarioExiste = await _usuarioService.Get(usuarioEdit.ID);
+
+            //Se usuário não exisitir, retorna erro
+            if (!usuarioExiste.Resultado)
+                return Ok(usuarioExiste);
+
+            //Monta a classe para alteração dos dados
+            Usuario usuarioAlterar = usuarioEdit.ParaUsuario(usuarioExiste.Modelo);
+
+            //Tenta alterar os dados
+            Resposta resposta = await _usuarioService.Edit(usuarioAlterar);
+
+            //Retorna 
+            return Ok(resposta);
         }
 
     }

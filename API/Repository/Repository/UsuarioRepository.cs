@@ -16,11 +16,6 @@ namespace Repository.Repository
         {
         }
 
-        public void Adicionar(Usuario usuario)
-        {
-            Create(usuario);
-        }
-
         public void Alterar(Usuario usuario)
         {
             Update(usuario);
@@ -36,9 +31,14 @@ namespace Repository.Repository
             return await _context.Users.Where(u => u.Email == email).CountAsync() > 0;
         }
 
-        public Usuario Selecionar(string id)
+        public async Task<bool> Salvar()
         {
-            return Read(id);
+            return await Save();
+        }
+
+        public async Task<Usuario> Selecionar(string id)
+        {
+            return await Read(id);
         }
 
         public IEnumerable<Usuario> Todos()

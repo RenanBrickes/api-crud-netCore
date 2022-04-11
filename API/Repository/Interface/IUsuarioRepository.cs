@@ -8,12 +8,12 @@ namespace Repository.Interface
 {
     public interface IUsuarioRepository
     {
-        void Adicionar(Usuario usuario);
         void Alterar(Usuario usuario);
-        Usuario Selecionar(string id);
+        Task<Usuario> Selecionar(string id);
         void Excluir(Usuario usuario);
+        Task<bool> Salvar();
         IEnumerable<Usuario> Todos();
         Task<bool> PorEmail(string email);
     }
-    
+
 }

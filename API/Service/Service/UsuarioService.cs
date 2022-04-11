@@ -48,13 +48,49 @@ namespace Service.Service
                 {
                     List<string> listaErros = incluirUsuario.Errors.Select(e => e.Description).ToList();
                     string erros = string.Empty;
-                    foreach(string erro in listaErros)
+                    foreach (string erro in listaErros)
                     {
                         erros += erro;
                     }
 
                     return new Resposta(false, erros);
                 }
+            }
+            catch
+            {
+                return new Resposta(false, string.Empty);
+            }
+        }
+
+        public async Task<Resposta<Usuario>> Get(string id)
+        {
+            try
+            {
+                //Seleciona o usuário
+                Usuario usuario = await _usuarioRepository.Selecionar(id);
+                //Verifia se não houve retorno
+                if (usuario is null)
+                    return new Resposta<Usuario>(false, "Não há usuário para esse ID");
+
+                return new Resposta<Usuario>(true, string.Empty, usuario);
+
+            }
+            catch
+            {
+                return new Resposta<Usuario>(false, string.Empty);
+            }
+        }
+
+        public async Task<Resposta> Edit(Usuario usuario)
+        {
+            try
+            {
+                //Altera modelo
+                 _usuarioRepository.Alterar(usuario);
+                //Salva resultado
+                bool resultado = await _usuarioRepository.Salvar();
+
+                return new Resposta(resultado, string.Empty);
             }
             catch
             {

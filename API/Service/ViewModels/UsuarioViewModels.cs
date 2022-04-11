@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dominio.Entites;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,6 +25,29 @@ namespace Service.ViewModels
 
         [Required(ErrorMessage = "O campo sexo é obrigatório.")]
         public string Sexo { get; set; }
+    }
+
+    public class UsuarioEditView
+    {
+        public string ID { get; set; }
+        public string Nome { get; set; }
+        public string Email { get; set; }
+        public string Telefone { get; set; }
+        public string Celular { get; set; }
+        public int? Cidade { get; set; }
+        public string Sexo { get; set; }
+
+        public Usuario ParaUsuario(Usuario usuario)
+        {
+            usuario.Email = string.IsNullOrEmpty(Email) ? usuario.Email : Email;
+            usuario.PhoneNumber = string.IsNullOrEmpty(Telefone) ? string.IsNullOrEmpty(Celular) ? usuario.PhoneNumber : Celular : Telefone; 
+            usuario.Cidade = Cidade.HasValue ? Cidade.Value : usuario.Cidade;
+            usuario.Sexo = string.IsNullOrEmpty(Sexo) ? usuario.Sexo: Sexo;
+
+            return usuario;
+        }
 
     }
+
+
 }

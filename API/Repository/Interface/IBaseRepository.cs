@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Repository.Interface
 {
     public interface IBaseRepository<T>
     {
-        void Create(T entity);
-        T Read(dynamic id);
+        Task<T> Read(dynamic id);
         void Update(T entity);
         void Delete(T entity);
-        bool Save();
+        Task<bool> Save();
 
     }
 }
