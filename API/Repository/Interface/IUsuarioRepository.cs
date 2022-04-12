@@ -12,7 +12,7 @@ namespace Repository.Interface
         Task<Usuario> Selecionar(string id);
         void Excluir(Usuario usuario);
         Task<bool> Salvar();
-        IEnumerable<Usuario> Todos();
+        Task<List<Usuario>> Todos();
         Task<bool> PorEmail(string email);
     }
 

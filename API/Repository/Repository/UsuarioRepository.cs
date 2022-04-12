@@ -38,12 +38,16 @@ namespace Repository.Repository
 
         public async Task<Usuario> Selecionar(string id)
         {
-            return await Read(id);
+            Usuario usuario = await _context.Users.FindAsync(id);
+            await _context.Entry(usuario).Reference(c => c.Cidade_Fk).LoadAsync();
+
+            return usuario;
         }
 
-        public IEnumerable<Usuario> Todos()
+        public async Task<List<Usuario>> Todos()
         {
-            return _context.Users.AsEnumerable();
+            return await _context.Users.Include(u => u.Cidade_Fk).ToListAsync();     
         }
     }
+
 }

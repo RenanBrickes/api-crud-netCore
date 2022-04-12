@@ -62,5 +62,55 @@ namespace API.Controllers
             return Ok(resposta);
         }
 
+        [HttpGet("/details")]
+        public async Task<IActionResult> Details(string id)
+        {
+            //Verifia se o id do usuário é valido
+            if (string.IsNullOrEmpty(id))
+                return Ok(new Resposta(false, "Informe um ID valido para consulta de usuário"));
+
+            //Faz a busca de usuário
+            Resposta<Usuario> respostaUsuario = await _usuarioService.Get(id);
+
+            //Verifica se encontrou o usuário com o id
+            if(!respostaUsuario.Resultado)
+                return Ok(new Resposta(false, "Informe um ID valido para consulta de usuário"));
+            
+            //Separa apenas os dados para retorno
+            UsuarioDetalheView usuarioDetalhe = new UsuarioDetalheView(respostaUsuario.Modelo);
+            //Retorna dados de busca de usuário
+            return Ok(new Resposta<UsuarioDetalheView>(respostaUsuario.Resultado, string.Empty, usuarioDetalhe));        
+        }
+
+        [HttpDelete("/delete")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            //Verifia se o id do usuário é valido
+            if (string.IsNullOrEmpty(id))
+                return Ok(new Resposta(false, "Informe um ID valido para consulta de usuário"));
+
+            //Faz a busca de usuário
+            Resposta<Usuario> respostaUsuario = await _usuarioService.Get(id);
+
+            //Verifica se encontrou o usuário com o id
+            if (!respostaUsuario.Resultado)
+                return Ok(new Resposta(false, "Informe um ID valido para consulta de usuário"));
+
+            //Faz a busca de usuário
+            Resposta respotaExclusao = await _usuarioService.Delete(respostaUsuario.Modelo);
+
+            //Retorna o resultado da oparação
+            return Ok(respotaExclusao);
+
+        }
+
+        [HttpGet("/details/all")]
+        public async Task<IActionResult> GetAll()
+        {
+            //Pega lista de usuários
+            RespostaLista<UsuarioDetalheView> usuarios = await _usuarioService.GetAll();
+
+            return Ok(usuarios);
+        }
     }
 }

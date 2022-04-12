@@ -28,19 +28,14 @@ namespace Repository.Repository
             _context.Remove(entity);
         }
 
-        public async Task<T> Read(dynamic id)
-        {
-            return await _context.Users.FindAsync(id);
-        }
-
         public async Task<bool> Save()
         {
-            return await _context.SaveChangesAsync() > 0; 
+            return await _context.SaveChangesAsync() > 0;
         }
 
-    public void Update(T entity)
-    {
-        _context.Update(entity);
+        public void Update(T entity)
+        {
+            _context.Update(entity);
+        }
     }
-}
 }

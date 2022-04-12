@@ -86,7 +86,7 @@ namespace Service.Service
             try
             {
                 //Altera modelo
-                 _usuarioRepository.Alterar(usuario);
+                _usuarioRepository.Alterar(usuario);
                 //Salva resultado
                 bool resultado = await _usuarioRepository.Salvar();
 
@@ -95,6 +95,43 @@ namespace Service.Service
             catch
             {
                 return new Resposta(false, string.Empty);
+            }
+        }
+
+        public async Task<Resposta> Delete(Usuario usuario)
+        {
+            try
+            {
+                //Exclui o usuário
+                _usuarioRepository.Excluir(usuario);
+                bool resultado = await _usuarioRepository.Salvar();
+
+                return new Resposta(resultado, string.Empty);
+            }
+            catch
+            {
+                return new Resposta(false, string.Empty);
+            }
+        }
+
+        public async Task<RespostaLista<UsuarioDetalheView>> GetAll()
+        {
+            try
+            {
+                //Seleciona todos usuarios
+                List<Usuario> usuarios = await _usuarioRepository.Todos();
+
+                //Monta lista para retornar dados
+                List<UsuarioDetalheView> usuariosDetalhe = usuarios.Select(u => new UsuarioDetalheView(u))
+                    .ToList();
+
+                //Retorna lista para
+                return new RespostaLista<UsuarioDetalheView>(true, string.Empty, usuariosDetalhe);
+            }
+            catch
+            {
+                return new RespostaLista<UsuarioDetalheView>(false);
+
             }
         }
 

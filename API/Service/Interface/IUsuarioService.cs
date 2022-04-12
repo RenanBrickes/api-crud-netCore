@@ -11,6 +11,8 @@ namespace Service.Interface
     {
         Task<Resposta> Create(UsuarioCreateView usuarioCreate);
         Task<Resposta<Usuario>> Get(string id);
+        Task<RespostaLista<UsuarioDetalheView>> GetAll();
+        Task<Resposta> Delete(Usuario usuario);
         Task<Resposta> Edit(Usuario usuario);
         Task<Resposta> PorEmail(string email);
     }

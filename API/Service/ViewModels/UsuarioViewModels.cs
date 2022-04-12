@@ -49,5 +49,26 @@ namespace Service.ViewModels
 
     }
 
+    public class UsuarioDetalheView 
+    {
+        public UsuarioDetalheView(Usuario usuario)
+        {
+            ID = usuario.Id;
+            Email = usuario.Email;
+            Celular = usuario.PhoneNumber;
+            Cidade = $"{usuario.Cidade_Fk.Nome}";
+            Sexo = usuario.Sexo;
+        }
+
+        public string ID { get; set; }
+        public string Email { get; set; }
+        public string Celular { get; set; }
+        public string Cidade { get; set; }
+        public string Sexo { get; set; }
+
+    
+    }
+
+
 
 }
