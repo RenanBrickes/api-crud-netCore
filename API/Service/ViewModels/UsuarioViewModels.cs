@@ -58,7 +58,7 @@ namespace Service.ViewModels
             ID = usuario.Id;
             Email = usuario.Email;
             Celular = usuario.PhoneNumber;
-            Cidade = $"{usuario.Cidade_Fk.Nome}";
+            Cidade = new IdNomeViewModels(usuario.Cidade, usuario.Cidade_Fk.Nome);
             Sexo = usuario.Sexo;
         }
 
@@ -66,7 +66,7 @@ namespace Service.ViewModels
         public string ID { get; set; }
         public string Email { get; set; }
         public string Celular { get; set; }
-        public string Cidade { get; set; }
+        public IdNomeViewModels Cidade { get; set; }
         public string Sexo { get; set; }
 
     
