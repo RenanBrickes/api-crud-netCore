@@ -30,6 +30,7 @@ namespace Service.Service
                 //Define classe para inclusão de usuário
                 Usuario novoUsuario = new Usuario
                 {
+                    Nome = usuarioCreate.Nome,
                     UserName = usuarioCreate.Email,
                     Cidade = usuarioCreate.Cidade,
                     PhoneNumber = usuarioCreate.Celular ?? usuarioCreate.Telefone,

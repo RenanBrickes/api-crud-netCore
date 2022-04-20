@@ -10,7 +10,7 @@ using Service.ViewModels;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]/usuario")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {

@@ -39,6 +39,7 @@ namespace Service.ViewModels
 
         public Usuario ParaUsuario(Usuario usuario)
         {
+            usuario.Nome = string.IsNullOrEmpty(Nome) ? usuario.Nome : Nome;
             usuario.Email = string.IsNullOrEmpty(Email) ? usuario.Email : Email;
             usuario.PhoneNumber = string.IsNullOrEmpty(Telefone) ? string.IsNullOrEmpty(Celular) ? usuario.PhoneNumber : Celular : Telefone; 
             usuario.Cidade = Cidade.HasValue ? Cidade.Value : usuario.Cidade;
@@ -53,6 +54,7 @@ namespace Service.ViewModels
     {
         public UsuarioDetalheView(Usuario usuario)
         {
+            Nome = usuario.Nome;
             ID = usuario.Id;
             Email = usuario.Email;
             Celular = usuario.PhoneNumber;
@@ -60,6 +62,7 @@ namespace Service.ViewModels
             Sexo = usuario.Sexo;
         }
 
+        public string Nome { get; set; }
         public string ID { get; set; }
         public string Email { get; set; }
         public string Celular { get; set; }

@@ -59,6 +59,16 @@ namespace API
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+            services.AddCors(options =>
+             {
+                 options.AddDefaultPolicy(
+                     policy =>
+                     {
+                         policy.WithOrigins("http://localhost:3000")
+                         .AllowAnyHeader();
+                     });
+             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,6 +90,8 @@ namespace API
             app.UseAuthorization();
 
             app.UseAuthentication();
+
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {

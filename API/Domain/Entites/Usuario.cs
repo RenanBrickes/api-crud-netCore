@@ -9,6 +9,9 @@ namespace Dominio.Entites
     public class Usuario : IdentityUser
     {
         [Required]
+        public string Nome { get; set; }
+
+        [Required]
         public string Sexo { get; set; }
         [Required]
         public int Cidade { get; set; }
